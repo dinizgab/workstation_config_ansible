@@ -1,0 +1,35 @@
+- name: Preparing the configuration 
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Installing linux apps 
+      apt:
+          name: '{{ item }}'
+          state: present
+      loop: 
+        - vim
+        - git
+        - tree
+        - curl
+        - htop
+        - python3-pip
+        - make
+        - wget
+        - virt-manager
+        - gnupg
+        - ca-certificates
+        - lsb-release
+    - name: Adding Docker GPG key
+      apt_key: 
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: Adding Docker repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu focal stable
+        state: present
+    - name: Update apt and install docker-ce
+      apt: 
+        name: docker-ce
+        state: latest
+        update_cache: true
+      

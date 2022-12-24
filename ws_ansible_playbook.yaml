@@ -7,7 +7,7 @@
           name: '{{ item }}'
           state: present
       loop: 
-        - vim
+        - vimqw
         - git
         - tree
         - curl
@@ -19,6 +19,8 @@
         - gnupg
         - ca-certificates
         - lsb-release
+        - apt-transport-https
+
     - name: Adding Docker GPG key
       apt_key: 
         url: https://download.docker.com/linux/ubuntu/gpg
@@ -32,4 +34,3 @@
         name: docker-ce
         state: latest
         update_cache: true
-      

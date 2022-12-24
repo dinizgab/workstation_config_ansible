@@ -49,4 +49,9 @@
       snap:
         name: intellij-idea-ultimate
         classic: yes
+
+    - name: Installing Spotify
+      snap:
+        name: spotify
+        classic: yes
       

@@ -1,9 +1,11 @@
 #!/usr/bin/env bash
 
 # Installing the dependencies to run the ansible playbook
+printf "Installing dependencies\n"
 apt update && apt install -y curl git python3-pip
 
 # Installing ansible
+printf "Installing ansible\n"
 if python3 -m pip -V;
     then python3 -m pip install --user ansible
     else 
@@ -15,11 +17,13 @@ fi
 echo "export PATH=$HOME/.local/bin:$PATH" >> $HOME/.bashrc
 source $HOME/.bashrc
 
-# Main git configutation
+# Main git configuration
+printf "Configurating git\n"
 git config --global user.email "gabrielpombodiniz@gmail.com"
 git config --global user.name "Gabriel Diniz"
 
 # Cloning the repository with the ansible playbook
+prinft "Cloning the ansible playbook and running it\n"
 if git clone https://github.com/dinizgab/workstation_config_ansible;
     then cd workstation_config_ansible && ansible-playbook ws_ansible_playbook.yaml --user gabriel
     else
@@ -27,10 +31,14 @@ if git clone https://github.com/dinizgab/workstation_config_ansible;
 fi
 
 # Turning zsh the main shell
+printf "Changing default shell\n"
 chsh -s $(which zsh) gabriel
+echo "export PATH=/home/gabriel/binaries/maven/bin:$PATH" >> /home/gabriel/.zshrc
+echo "export PATH=/home/gabriel/binaries/go/bin:$PATH" >> /home/gabriel/.zshrc
 
 # Installing Brave Browser
 # Getting Brave keyring
+printf "Installing Brave\n"
 curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
 
 # Adding brave repository to sources
@@ -41,3 +49,14 @@ apt update
 
 # Installing Brave
 apt install brave-browser
+
+# Configuring the backup script so that crontab runs it every day ate 22:22
+# and moving it to /usr/local/sbin so that it can be run normally
+printf "Configuring the backup script\n"
+mv ./backup_script.sh /usr/local/sbin
+(crontab -l 2>/dev/null; echo "*/22 22 * * * /usr/local/sbin") | crontab -
+
+# Installing nodejs and NPM
+printf "Installing nodejs and npm\n"
+curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt install -y nodejs

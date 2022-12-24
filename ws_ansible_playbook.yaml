@@ -45,6 +45,6 @@
 
     - name: Installing Intellij
       snap:
-        name: intellij-idea-educational
+        name: intellij-idea-ultimate
         classic: yes
       

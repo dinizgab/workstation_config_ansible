@@ -10,5 +10,4 @@
 sudo su
 chmod u+x init.sh
 ./init.sh
-
 ```

@@ -18,6 +18,7 @@
         - ca-certificates
         - lsb-release
         - apt-transport-https
+        - openjdk-17-jre
 
     - name: Adding Docker GPG key
       apt_key: 
@@ -32,3 +33,18 @@
         name: docker-ce
         state: latest
         update_cache: true
+
+    - name: Downloading Discord package
+      get_url:
+        url="https://discord.com/api/download?platform=linux&format=deb"
+        dest="/home/gabriel/Downloads/discord.deb"  
+    
+    - name: Installing Discord
+      apt:
+        deb: /home/gabriel/Downloads/discord.deb
+
+    - name: Installing Intellij
+      snap:
+        name: intellij-idea-educational
+        classic: yes
+      

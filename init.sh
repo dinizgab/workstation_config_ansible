@@ -21,9 +21,23 @@ git config --global user.name "Gabriel Diniz"
 
 # Cloning the repository with the ansible playbook
 if git clone https://github.com/dinizgab/workstation_config_ansible;
-    then cd workstation_config_ansible && ansible-playbook ws_ansible_playbook.yaml
+    then cd workstation_config_ansible && ansible-playbook ws_ansible_playbook.yaml --user gabriel
     else
         printf "ERROR: git clone failed!\n"
 fi
 
 # Turning zsh the main shell
+chsh -s $(which zsh) gabriel
+
+# Installing Brave Browser
+# Getting Brave keyring
+curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
+
+# Adding brave repository to sources
+echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
+
+# Updating apt repositories
+apt update
+
+# Installing Brave
+apt install brave-browser

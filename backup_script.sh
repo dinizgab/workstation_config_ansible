@@ -11,6 +11,7 @@ storage="/mnt/backup"
 date_format=$(date "+%d-%m-%Y")
 
 # Log file name
+mkdir /var/log/backup/
 log_file="/var/log/backup/backup.log"
 
 

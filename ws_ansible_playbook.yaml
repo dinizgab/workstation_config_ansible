@@ -7,12 +7,10 @@
           name: '{{ item }}'
           state: present
       loop: 
-        - vimqw
-        - git
+        - vim
+        - zsh
         - tree
-        - curl
         - htop
-        - python3-pip
         - make
         - wget
         - virt-manager

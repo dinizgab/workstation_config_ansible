@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+init_log_file="./init.log"
+
 # Installing the dependencies to run the ansible playbook
 printf "Installing dependencies\n"
 apt update && apt install -y curl git python3-pip
@@ -9,39 +11,45 @@ printf "Installing ansible\n"
 if python3 -m pip -V;
     then python3 -m pip install --user ansible
     else 
-        printf "ERROR: pip is not installed!\n"
+        printf "[$(date)] - ERROR: pip is not installed!\n" >> $init_log_file
         exit 1
 fi 
 
-# Adding ansible files to the path
+# Adding ansible files to the root path
 echo "export PATH=$HOME/.local/bin:$PATH" >> $HOME/.bashrc
 source $HOME/.bashrc
 
 # Main git configuration
 printf "Configurating git\n"
-git config --global user.email "gabrielpombodiniz@gmail.com"
-git config --global user.name "Gabriel Diniz"
+git config --global user.email "your_email"
+git config --global user.name "your_name"
 
 # Cloning the repository with the ansible playbook
-prinft "Cloning the ansible playbook and running it\n"
+printf "Cloning the ansible playbook and running it\n"
 if git clone https://github.com/dinizgab/workstation_config_ansible;
-    then cd workstation_config_ansible && ansible-playbook ws_ansible_playbook.yaml --user gabriel
+    then cd workstation_config_ansible && ansible-playbook ws_ansible_playbook.yaml --user your_user
     else
-        printf "ERROR: git clone failed!\n"
+        printf "[$(date)] - ERROR: git clone failed!\n" >> $init_log_file
+        exit 1
 fi
 
 
 # Installing oh-my-zsh
 printf "Installing oh-my-zsh\n"
-curl -fsL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
-
+if which zsh; 
+    then curl -fsL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
+    else
+        printf "[$(date)] - ERROR: zsh is not installed!\n" >> $init_log_file
+        exit 1
+fi
 # Turning zsh the main shell
 printf "Changing default shell\n"
-chsh -s $(which zsh) gabriel
+chsh -s $(which zsh) your_user
 
 # Configuring zsh path
-echo "export PATH=/home/gabriel/binaries/maven/bin:$PATH" >> /home/gabriel/.zshrc
-echo "export PATH=/home/gabriel/binaries/go/bin:$PATH" >> /home/gabriel/.zshrc
+# Add new paths to your $PATH variable with the following settings
+# echo "export PATH=/home/gabriel/binaries/maven/bin:$PATH" >> /home/gabriel/.zshrc
+# echo "export PATH=/home/gabriel/binaries/go/bin:$PATH" >> /home/gabriel/.zshrc
 
 # Installing Brave Browser
 # Getting Brave keyring
@@ -67,3 +75,5 @@ mv ./backup_script.sh /usr/local/sbin
 printf "Installing nodejs and npm\n"
 curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 sudo apt install -y nodejs
+
+printf "Configuration made successfully"

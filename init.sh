@@ -30,9 +30,16 @@ if git clone https://github.com/dinizgab/workstation_config_ansible;
         printf "ERROR: git clone failed!\n"
 fi
 
+
+# Installing oh-my-zsh
+printf "Installing oh-my-zsh\n"
+curl -fsL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | bash
+
 # Turning zsh the main shell
 printf "Changing default shell\n"
 chsh -s $(which zsh) gabriel
+
+# Configuring zsh path
 echo "export PATH=/home/gabriel/binaries/maven/bin:$PATH" >> /home/gabriel/.zshrc
 echo "export PATH=/home/gabriel/binaries/go/bin:$PATH" >> /home/gabriel/.zshrc
 

@@ -19,6 +19,8 @@
         - lsb-release
         - apt-transport-https
         - openjdk-17-jre
+        - ifconfig
+        - openssh-client
 
     - name: Adding Docker GPG key
       apt_key: 

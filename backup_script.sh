@@ -1,8 +1,9 @@
 #!/usr/bin/env bash
 
 # Directories to do the backup
-backup_path=("/home/gabriel/Downloads" "/home/gabriel/www" "/home/gabriel/binaries")
-backup_path_dir=("downloads" "www" "binaries")
+backup_path=("Put here the files you want to backup")
+backup_path_dir=("Put here the files name you want to format")
+# The two arrays should have the same length
 
 # Storage where the backup is made
 storage="/mnt/backup"
